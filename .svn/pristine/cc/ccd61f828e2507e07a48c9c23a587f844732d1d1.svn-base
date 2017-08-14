@@ -1,0 +1,7 @@
+package cn.itcast.dao.impl;
+
+import cn.itcast.dao.LinkManDao;
+import cn.itcast.domain.LinkMan;
+import cn.itcast.service.LinkManService;
+
+public class LinkManDaoImpl extends BaseDaoImpl<LinkMan> implements LinkManDao {}

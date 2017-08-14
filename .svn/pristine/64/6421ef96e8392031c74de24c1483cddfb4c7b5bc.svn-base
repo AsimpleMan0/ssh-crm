@@ -1,0 +1,48 @@
+package cn.itcast.dao.impl;
+
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate5.HibernateCallback;
+
+import cn.itcast.dao.CustomerDao;
+import cn.itcast.domain.Customer;
+
+public class CustomerDaoImpl extends BaseDaoImpl<Customer> implements CustomerDao {
+
+	@Override
+	// 统计客户行业
+	@SuppressWarnings("all")
+	public List<Object[]> getIndustry() {
+		String sql = "SELECT bd.`dict_item_name`,COUNT(*) total FROM cst_customer c,base_dict bd"
+				+ " WHERE c.`cust_industry`=bd.`dict_id` GROUP BY c.`cust_industry`";
+		List<Object[]> list = getHibernateTemplate().execute(new HibernateCallback<List<Object[]>>() {
+			@Override
+			public List<Object[]> doInHibernate(Session session) throws HibernateException {
+				SQLQuery query = session.createSQLQuery(sql);
+				List<Object[]> list = query.list();
+				return list;
+			}
+		});
+		return list;
+	}
+
+	@Override
+	// 统计客户来源
+	@SuppressWarnings("all")
+	public List<Object[]> getSource() {
+		String sql = "SELECT bd.`dict_item_name`, COUNT(*) total FROM cst_customer c,base_dict bd"+
+					" WHERE c.`cust_source`=bd.`dict_id` GROUP BY c.`cust_source`";
+		List<Object[]> list = getHibernateTemplate().execute(new HibernateCallback<List<Object[]>>() {
+			@Override
+			public List<Object[]> doInHibernate(Session session) throws HibernateException {
+				SQLQuery query = session.createSQLQuery(sql);
+				List<Object[]> list = query.list();
+				return list;
+			}
+		});
+		return list;
+	}
+}

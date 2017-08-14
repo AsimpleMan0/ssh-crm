@@ -1,0 +1,15 @@
+package cn.itcast.dao;
+
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+
+import cn.itcast.domain.Customer;
+
+public interface CustomerDao {
+	//获得所有记录总数
+	Integer getTotalCount(DetachedCriteria dc);
+	//获得当前页面客户列表
+	List<Customer> getPageList(DetachedCriteria dc, Integer start, Integer pageSize);
+
+}
